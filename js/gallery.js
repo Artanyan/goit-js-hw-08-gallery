@@ -1,12 +1,33 @@
 import images from './gallery-items.js';
-import createGalleryMarkup from './create-gallery.js';
-import {
-  galleryRef,
-  lightboxRef,
-  overlayRef,
-  imageRef,
-  btnModalCloseRef,
-} from './dom.js';
+
+function createGalleryMarkup(images) {
+    return images
+      .map(({ preview, original, description }) => {
+        return `<li class="gallery__item">
+    <a
+      class="gallery__link"
+      href="${original}"
+    >
+      <img
+        class="gallery__image"
+        src="${preview}"
+        data-source="${original}"
+        alt="${description}"
+      />
+    </a>
+  </li>`;
+      })
+      .join('');
+  }
+
+const galleryRef = document.querySelector('.js-gallery');
+const lightboxRef = document.querySelector('.js-lightbox');
+const overlayRef = document.querySelector('.lightbox__overlay');
+const imageRef = document.querySelector('.lightbox__image');
+const btnModalCloseRef = document.querySelector(
+  'button[data-action="close-lightbox"]',
+);
+
 
 const galleryMarkup = createGalleryMarkup(images);
 galleryRef.insertAdjacentHTML('beforeend', galleryMarkup);
